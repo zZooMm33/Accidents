@@ -10,5 +10,10 @@
 --------------------------------------------------------------------------------------
 */
 
-:r .\CreateRole.sql
+:r .\CreateRoles.sql
 :r .\CreateTestUsers.sql
+
+:r .\CreateDangers.sql
+:r .\CreateProfessions.sql
+:r .\CreateTestUsers.sql
+:r .\CreateSourceDangers.sql

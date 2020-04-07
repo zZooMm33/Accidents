@@ -61,12 +61,20 @@
     <Folder Include="Procedures" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Scripts\CreateRole.sql" />
+    <None Include="Scripts\CreateRoles.sql" />
     <None Include="Scripts\CreateTestUsers.sql" />
+    <None Include="Scripts\CreateSourceDangers.sql" />
+    <None Include="Scripts\CreateProfessions.sql" />
+    <None Include="Scripts\CreateDangers.sql" />
+    <None Include="Scripts\CreateAccidents.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Users.sql" />
     <Build Include="Tables\Roles.sql" />
+    <Build Include="Tables\Dangers.sql" />
+    <Build Include="Tables\Professions.sql" />
+    <Build Include="Tables\SourceDangers.sql" />
+    <Build Include="Tables\Accidents.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

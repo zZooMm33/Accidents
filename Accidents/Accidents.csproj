@@ -138,11 +138,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DatabaseContext.cs" />
-    <Compile Include="Models\Storage\UserModel\Role\CustomRoleProvider.cs" />
-    <Compile Include="Models\Storage\UserModel\Role\Role.cs" />
-    <Compile Include="Models\Storage\UserModel\Login.cs" />
-    <Compile Include="Models\Storage\UserModel\Register.cs" />
-    <Compile Include="Models\Storage\UserModel\User.cs" />
+    <Compile Include="Models\Storage\AccidentModels\Accident.cs" />
+    <Compile Include="Models\Storage\Danger.cs" />
+    <Compile Include="Models\Storage\Profession.cs" />
+    <Compile Include="Models\Storage\SourceDanger.cs" />
+    <Compile Include="Models\Storage\UserModels\Role\CustomRoleProvider.cs" />
+    <Compile Include="Models\Storage\UserModels\Role\Role.cs" />
+    <Compile Include="Models\Storage\UserModels\Login.cs" />
+    <Compile Include="Models\Storage\UserModels\Register.cs" />
+    <Compile Include="Models\Storage\UserModels\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

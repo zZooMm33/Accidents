@@ -1,4 +1,5 @@
-﻿using Accidents.Models.Storage.UserModel;
+﻿using Accidents.Models.Storage;
+using Accidents.Models.Storage.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,5 +13,9 @@ namespace Accidents.Models
         public DatabaseContext() : base("Database") { }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Danger> Dangers { get; set; }
+        public DbSet<Profession> Professions { get; set; }
+        public DbSet<SourceDanger> SourceDangers { get; set; }
+        public DbSet<Accident> Accidents { get; set; }
     }
 }
