@@ -11,7 +11,6 @@ namespace Accidents.Models
     {
         public DatabaseContext() : base("Database") { }
         public DbSet<User> Users { get; set; }
-
         public DbSet<Role> Roles { get; set; }
     }
 }

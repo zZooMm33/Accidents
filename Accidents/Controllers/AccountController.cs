@@ -34,7 +34,12 @@ namespace Accidents.Controllers
                 User user = null;
                 using (DatabaseContext db = new DatabaseContext())
                 {
-                    user = db.Users.FirstOrDefault(u => u.Email == log.Email && u.Password == log.Password);
+                    var provider = MD5.Create();
+                    string salt = WebConfigurationManager.AppSettings["Salt"];
+                    byte[] bytes = provider.ComputeHash(Encoding.ASCII.GetBytes(salt + log.Password));
+                    string passHash = BitConverter.ToString(bytes);
+
+                    user = db.Users.FirstOrDefault(u => u.Email == log.Email && u.Password == passHash);
                 }
                 if (user != null)
                 {
