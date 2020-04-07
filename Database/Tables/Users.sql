@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[Users]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
+	[Email] NVARCHAR(50) NOT NULL,
+	[Password] NVARCHAR(256) NOT NULL,
+	[DateBirth] DATE NULL,
+	[RoleId] INT NOT NULL DEFAULT 2,
+
+	FOREIGN KEY ([RoleId]) REFERENCES [dbo].[Roles]([Id]),
+)

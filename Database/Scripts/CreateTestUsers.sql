@@ -1,0 +1,2 @@
+﻿INSERT INTO [dbo].[Users] ([Email], [Password], [RoleId]) VALUES ('admin@1', 'F2-9D-42-2D-03-4C-27-EC-DA-92-10-F8-78-D0-D6-BC', 1);
+INSERT INTO [dbo].[Users] ([Email], [Password]) VALUES ('user@1', 'F2-9D-42-2D-03-4C-27-EC-DA-92-10-F8-78-D0-D6-BC');

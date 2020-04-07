@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />    
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+                @if (@ViewBag.Title == "Главная")
+                {
+                    <li class="nav-item active">
+                        @Html.ActionLink("Главная", "Index", "Home", new object { }, new { @class = "nav-link" })
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        @Html.ActionLink("Главная", "Index", "Home", new object { }, new { @class = "nav-link" })
+                    </li>
+                }
+
+                <li class="nav-item">
+                    @Html.ActionLink("Профессии", "About", "Home", new object { }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Опасности", "Contact", "Home", new object { }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Источники опасностей", "Contact", "Home", new object { }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Несчастные случаи", "Contact", "Home", new object { }, new { @class = "nav-link" })
+                </li>
+            </ul>
+
+            <form class="form-inline my-2 my-lg-0">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <span class="navbar-text mr-sm-2"><u>Hello, @User.Identity.Name</u></span>
+                    if (User.IsInRole("admin"))
+                    {
+                        @Html.ActionLink("Панель администратора", "Contact", "Home", new object { }, new { @class = "btn btn-primary mr-sm-2" })
+                    }
+                    @Html.ActionLink("Выход", "Logoff", "Account", new object { }, new { @class = "btn btn-danger my-2 my-sm-0" })
+                }
+                else
+                {
+                    @Html.ActionLink("Вход", "Login", "Account", new object { }, new { @class = "btn btn-success mr-sm-2" })
+                    @Html.ActionLink("Регистрация", "Register", "Account", new object { }, new { @class = "btn btn-primary my-2 my-sm-0" })
+                }
+            </form>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer class="center">
+            <p>&copy; @DateTime.Now.Year - все права защищены</p>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/jquery-3.4.1.slim.min.js"></script>    
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
