@@ -7,7 +7,8 @@
     <title>@ViewBag.Title</title>
 
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />    
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    @RenderSection("Styles", false)
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -28,16 +29,16 @@
                 }
 
                 <li class="nav-item">
-                    @Html.ActionLink("Профессии", "About", "Home", new object { }, new { @class = "nav-link" })
+                    @Html.ActionLink("Профессии", "About", "Home", new object { }, new { @class = "nav-link disabled" })
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("Опасности", "Contact", "Home", new object { }, new { @class = "nav-link" })
+                    @Html.ActionLink("Опасности", "Contact", "Home", new object { }, new { @class = "nav-link disabled" })
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("Источники опасностей", "Contact", "Home", new object { }, new { @class = "nav-link" })
+                    @Html.ActionLink("Источники опасностей", "Contact", "Home", new object { }, new { @class = "nav-link disabled" })
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("Несчастные случаи", "Contact", "Home", new object { }, new { @class = "nav-link" })
+                    @Html.ActionLink("Несчастные случаи", "Contact", "Home", new object { }, new { @class = "nav-link disabled" })
                 </li>
             </ul>
 
@@ -47,7 +48,7 @@
                     <span class="navbar-text mr-sm-2"><u>Hello, @User.Identity.Name</u></span>
                     if (User.IsInRole("admin"))
                     {
-                        @Html.ActionLink("Панель администратора", "Contact", "Home", new object { }, new { @class = "btn btn-primary mr-sm-2" })
+                        @Html.ActionLink("Панель администратора по НС", "Index", "AdminPanelAccidents", new object { }, new { @class = "btn btn-primary mr-sm-2" })
                     }
                     @Html.ActionLink("Выход", "Logoff", "Account", new object { }, new { @class = "btn btn-danger my-2 my-sm-0" })
                 }
@@ -68,9 +69,8 @@
         </footer>
     </div>
 
-    <script src="~/Scripts/jquery-3.4.1.slim.min.js"></script>    
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>    
     <script src="~/Scripts/bootstrap.min.js"></script>
-
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -1,0 +1,69 @@
+﻿.col-text-left {
+    text-align: left;
+}
+
+.col-text-center {
+    text-align: center;
+}
+
+table {
+    padding: 10px;
+    border: 2px solid grey;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td {
+    text-align: center;
+    padding: 2px;
+    border: 2px solid grey;
+    font-size: 14px;
+}
+
+th {
+    color: black;
+    font-weight: bold;    
+    font-size: 16px;
+    padding: 3px;
+    border: 2px solid grey;
+}
+
+#col-date {
+    text-align: center;
+    width: 5%;
+}
+
+#col-title {
+    text-align: center;
+    width: 5%;
+}
+
+#col-description {
+    text-align: center;
+    width: 50%;
+}
+
+#col-danger {
+    text-align: center;
+    width: 5%;
+}
+
+#col-profession {
+    text-align: center;
+    width: 5%;
+}
+
+#col-source-danger {
+    text-align: center;
+    width: 5%;
+}
+
+#col-link {
+    text-align: center;
+    width: 5%;
+}
+
+.col-button {
+    text-align: center;
+    width: 10%;
+}

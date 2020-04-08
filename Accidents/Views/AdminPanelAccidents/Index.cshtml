@@ -1,0 +1,129 @@
+﻿@model IEnumerable<Accidents.Models.Storage.Accident>
+
+@{
+    ViewBag.Title = "Панель администратора по НС";
+}
+
+@section Styles {
+    <link href="~/Content/Accidents/AccidentsIndex.css" rel="stylesheet" type="text/css" />
+
+    <!-- some inline CSS -->
+    <style type="text/css">
+    </style>
+}
+
+<h1 class="mt-4 center">Панель администратора по НС</h1>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addAccidient">Загрузить новые НС</button>
+            <button type="button" class="btn btn-info disabled">Показать фильтр</button>
+            <br>
+            <table id="main-table" class="mt-4">
+                <thead>
+                    <tr>
+                        <th id="col-title">Название</th>
+                        <th id="col-description">Описание</th>
+                        <th id="col-date">Дата</th>
+                        <th id="col-profession">Профессия</th>
+                        <th id="col-danger">Опасность</th>
+                        <th id="col-source-danger">Источник опасности</th>
+                        <th id="col-link">Ссылка</th>
+                        <th class="col-button"></th>
+                        <th class="col-button"></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr class="@item.Id">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td class="col-text-left">
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Profession.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Danger.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SourceDanger.Title)
+                            </td>
+                            <td>
+                                <a href="@Html.DisplayFor(modelItem => item.Link)">Перейти</a>
+                            </td>
+                            <td>
+                                @Html.ActionLink("Изменить", "Edit", "AdminPanelAccidents", new { id = item.Id }, new { @class = "btn btn-primary" })
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger delbutton">Удалить</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addAccidient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Загрузить новые НС</h5>
+                <button type="button" class="close clearFile" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Выберите Excel-файл</p>
+                <input type="file" id="excelFile" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary clearFile" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary">Загрузить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.delbutton').on('click', Delete);
+            $('.clearFile').on('click', ClearFile);
+
+            function Delete() {
+
+                var tr = $(this).parent().parent();
+                var id = tr.attr('class');
+
+                $.ajax({
+                    url: '@Url.Action("Delete", "AdminPanelAccidents")',
+                    dataType: "json",
+                    method: "POST",
+                    data: "&id=" + id,
+                    success: function () {
+                        tr.remove();
+                    },
+                    error: function (data) {
+                        alert(data.responseJSON);
+                    }
+                });
+            }
+
+            function ClearFile() {
+                document.getElementById("excelFile").value = null;
+            }
+        });
+    </script>
+}
