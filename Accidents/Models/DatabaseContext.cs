@@ -10,7 +10,7 @@ namespace Accidents.Models
 {
     public class DatabaseContext : DbContext
     {
-        public DatabaseContext() : base("Database") { }
+        public DatabaseContext() : base("Accidents.Db") { }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Danger> Dangers { get; set; }

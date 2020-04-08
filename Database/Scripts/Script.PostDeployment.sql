@@ -15,5 +15,5 @@
 
 :r .\CreateDangers.sql
 :r .\CreateProfessions.sql
-:r .\CreateTestUsers.sql
 :r .\CreateSourceDangers.sql
+:r .\CreateAccidents.sql
