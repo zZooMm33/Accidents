@@ -120,6 +120,7 @@ namespace Accidents.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult LoadExcelFile(HttpPostedFileBase excelFile)
         {
+            int countAdd = 0;
             XLWorkbook workBook;
 
             if (excelFile == null)
@@ -231,6 +232,7 @@ namespace Accidents.Controllers
                                     }
                                 }
 
+                                countAdd++;
                                 db.Accidents.Add(accident);
                                 db.SaveChanges();
                             }
@@ -245,7 +247,7 @@ namespace Accidents.Controllers
             }
 
             Response.StatusCode = (int)HttpStatusCode.OK;
-            return Json("НС были успешно добавлены в БД", JsonRequestBehavior.AllowGet);
+            return Json("Успешно!\nБыло добавлено " + countAdd.ToString() + " новых НС", JsonRequestBehavior.AllowGet);
         }
 
         [Authorize(Roles = "admin")]
