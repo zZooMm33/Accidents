@@ -17,7 +17,8 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-12">
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addAccidient">Загрузить новые НС</button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addAccidient">Загрузить новые НС в БД</button>
+            @Html.ActionLink("Скачать НС", "Export", "AdminPanelAccidents", new { }, new { @class = "btn btn-info" })
             <button type="button" class="btn btn-info disabled">Показать фильтр</button>
             <br>
             <table id="main-table" class="mt-4">
@@ -86,11 +87,12 @@
             </div>
             <div class="modal-body">
                 <p>Выберите Excel-файл</p>
-                <input type="file" id="excelFile" />
+                <input type="file" id="excelFile" />                    
+                <p class="center mt-4"><img style="display:none" id="loadImg" src="~/Img/load.gif" alt="Load" /></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary clearFile" data-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-primary">Загрузить</button>
+                <button type="button" class="btn btn-primary" id="loadFileInServer">Загрузить</button>
             </div>
         </div>
     </div>
@@ -101,6 +103,7 @@
         $(document).ready(function () {
             $('.delbutton').on('click', Delete);
             $('.clearFile').on('click', ClearFile);
+            $('#loadFileInServer').on('click', LoadFileInServer);
 
             function Delete() {
 
@@ -123,6 +126,30 @@
 
             function ClearFile() {
                 document.getElementById("excelFile").value = null;
+            }
+
+            function LoadFileInServer() {
+                $("#loadImg").show();
+                var $input = $("#excelFile");
+                var fd = new FormData;
+
+                fd.append('excelFile', $input.prop('files')[0]);
+
+                $.ajax({
+                    url: '@Url.Action("LoadExcelFile", "AdminPanelAccidents")',
+                    processData: false,
+                    contentType: false,                    
+                    method: "POST",
+                    data: fd,
+                    success: function (data) {
+                        $("#loadImg").hide();
+                        alert(data);
+                    },
+                    error: function (data) {
+                        $("#loadImg").hide();
+                        alert(data.responseJSON);
+                    }
+                });
             }
         });
     </script>
