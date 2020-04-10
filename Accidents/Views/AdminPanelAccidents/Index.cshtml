@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Accidents.Models.Storage.Accident>
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<Accidents.Models.Storage.Accident>
 
 @{
     ViewBag.Title = "Панель администратора по НС";
@@ -6,6 +9,7 @@
 
 @section Styles {
     <link href="~/Content/Accidents/AccidentsIndex.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
     <!-- some inline CSS -->
     <style type="text/css">
@@ -18,9 +22,22 @@
     <div class="row">
         <div class="col-12">
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addAccidient">Загрузить новые НС в БД</button>
-            @Html.ActionLink("Скачать НС", "Export", "AdminPanelAccidents", new { }, new { @class = "btn btn-info" })
-            <button type="button" class="btn btn-info disabled">Показать фильтр</button>
+            @Html.ActionLink("Скачать НС", "Export", "AdminPanelAccidents", new { }, new { @class = "btn btn-info" })            
             <br>
+            @using (Html.BeginForm("Index", "AdminPanelAccidents", FormMethod.Get))
+            {
+                <br />
+                <p class="center">@Html.TextBox("Search") <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Найти" /></p>
+                <p class="center">
+                    Поле для поиска:
+                    @Html.RadioButton("SearchBy", "Title", true) <text>Название</text>
+                    @Html.RadioButton("SearchBy", "Description") <text>Описание</text>
+                    @Html.RadioButton("SearchBy", "Profession") <text>Профессия</text>
+                    @Html.RadioButton("SearchBy", "Danger") <text>Опасность</text>
+                    @Html.RadioButton("SearchBy", "SourceDanger") <text>Источник опасности</text>
+                </p>
+            }
+
             <table id="main-table" class="mt-4">
                 <thead>
                     <tr>
@@ -75,6 +92,10 @@
     </div>
 </div>
 
+<br />
+<p>Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount</p>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, Search = Request.QueryString["Search"], SearchBy = Request.QueryString["SearchBy"] }))
+
 <!-- Modal -->
 <div class="modal fade" id="addAccidient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -87,7 +108,7 @@
             </div>
             <div class="modal-body">
                 <p>Выберите Excel-файл</p>
-                <input type="file" id="excelFile" />                    
+                <input type="file" id="excelFile" />
                 <p class="center mt-4"><img style="display:none" id="loadImg" src="~/Img/load.gif" alt="Load" /></p>
             </div>
             <div class="modal-footer">
@@ -138,7 +159,7 @@
                 $.ajax({
                     url: '@Url.Action("LoadExcelFile", "AdminPanelAccidents")',
                     processData: false,
-                    contentType: false,                    
+                    contentType: false,
                     method: "POST",
                     data: fd,
                     success: function (data) {
