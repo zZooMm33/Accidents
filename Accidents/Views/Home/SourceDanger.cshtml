@@ -7,5 +7,53 @@
     ViewBag.Title = "Источники опасностей";
 }
 
+@section Styles {
+    <link href="~/Content/Tables.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+    <!-- some inline CSS -->
+    <style type="text/css">
+    </style>
+}
+
 <h1 class="center mt-4">Источники опасностей</h1>
 
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            @using (Html.BeginForm("SourceDanger", "Home", FormMethod.Get))
+            {
+                <br />
+                <p class="center">@Html.TextBox("Search") <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Найти" /></p>
+            }
+
+            <table id="main-table" class="mt-4">
+                <thead>
+                    <tr>
+                        <th style="width: 90%" class="center">Название</th>
+                        <th style="width: 10%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr class="@item.Id">
+                            <td class="col-text-left">
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Статистика", "Edit", "AdminPanelAccidents", new { id = item.Id }, new { @class = "btn btn-primary disabled" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<br />
+<p>Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount</p>
+@Html.PagedListPager(Model, page => Url.Action("SourceDanger", new { page, Search = Request.QueryString["Search"] }))
