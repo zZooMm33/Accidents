@@ -328,6 +328,8 @@
     <Content Include="Views\Home\SourceDanger.cshtml" />
     <Content Include="Views\Home\Accident.cshtml" />
     <Content Include="Views\Statistics\Profession.cshtml" />
+    <Content Include="Views\Statistics\Danger.cshtml" />
+    <Content Include="Views\Statistics\SourceDanger.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

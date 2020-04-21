@@ -1,0 +1,90 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<Accidents.Models.Storage.Accident>
+
+@{
+    ViewBag.Title = "Статиска для опасности - " + ViewBag.StatisticsTitle;
+}
+
+@section Styles {
+    <link href="~/Content/Tables.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+    <!-- some inline CSS -->
+    <style type="text/css">
+
+    </style>
+}
+
+<h1 class="center mt-4"> Статистика для опасности - @ViewBag.StatisticsTitle</h1>
+
+<h4 class="left mt-4">Несчастные случаи связанные с опасностею - @ViewBag.StatisticsTitle</h4>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            @using (Html.BeginForm("Danger", "Statistics", FormMethod.Get))
+            {
+                <br />
+                <p class="center">@Html.TextBox("Search") <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Найти" /></p>
+                <p class="center">
+                    Поле для поиска:
+                    @Html.RadioButton("SearchBy", "Title", true) <text>Название</text>
+                    @Html.RadioButton("SearchBy", "Description") <text>Описание</text>
+                    @Html.RadioButton("SearchBy", "Profession") <text>Профессия</text>
+                    @Html.RadioButton("SearchBy", "Danger") <text>Опасность</text>
+                    @Html.RadioButton("SearchBy", "SourceDanger") <text>Источник опасности</text>
+                </p>
+            }
+
+            <table id="main-table" class="mt-4">
+                <thead>
+                    <tr>
+                        <th style="width: 10%" class="center">Название</th>
+                        <th style="width: 60%" class="center">Описание</th>
+                        <th style="width: 5%" class="center">Дата</th>
+                        <th style="width: 5%" class="center">Профессия</th>
+                        <th style="width: 10%" class="center">Опасность</th>
+                        <th style="width: 5%" class="center">Источник опасности</th>
+                        <th style="width: 5%" class="center">Ссылка</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr class="@item.Id">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td class="col-text-left">
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Profession.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Danger.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SourceDanger.Title)
+                            </td>
+                            <td>
+                                <a href="@Html.DisplayFor(modelItem => item.Link)">Перейти</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<br />
+<p>Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount</p>
+@Html.PagedListPager(Model, page => Url.Action("Danger", new { page, Search = Request.QueryString["Search"], SearchBy = Request.QueryString["SearchBy"] }))
+
