@@ -13,20 +13,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
-                @if (@ViewBag.Title == "Главная")
-                {
-                    <li class="nav-item active">
-                        @Html.ActionLink("Главная", "Index", "Home", new object { }, new { @class = "nav-link" })
-                    </li>
-                }
-                else
-                {
-                    <li class="nav-item">
-                        @Html.ActionLink("Главная", "Index", "Home", new object { }, new { @class = "nav-link" })
-                    </li>
-                }
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">               
 
                 @if (@ViewBag.Title == "Профессии")
                 {
@@ -83,20 +70,36 @@
             </ul>
 
             <form class="form-inline my-2 my-lg-0">
-                @if (User.Identity.IsAuthenticated)
+                @try
                 {
-                    <span class="navbar-text mr-sm-2"><u>Hello, @User.Identity.Name</u></span>
-                    if (User.IsInRole("admin"))
+                    if (User.Identity.IsAuthenticated)
                     {
-                        @Html.ActionLink("Панель администратора по НС", "Index", "AdminPanelAccidents", new object { }, new { @class = "btn btn-primary mr-sm-2" })
+                        // сначала проверить роль пользователя, если нет связи с бд будет ошибка
+                        if (User.IsInRole("admin")) 
+                        {
+                            <span class="navbar-text mr-sm-2"><u>Hello, @User.Identity.Name</u></span>
+                            @Html.ActionLink("Панель администратора по НС", "Index", "AdminPanelAccidents", new object { }, new { @class = "btn btn-primary mr-sm-2" })
+                        }
+                        else
+                        {
+                            <span class="navbar-text mr-sm-2"><u>Hello, @User.Identity.Name</u></span>
+                        }
+
+                        @Html.ActionLink("Выход", "Logoff", "Account", new object { }, new { @class = "btn btn-danger my-2 my-sm-0" })
+
                     }
-                    @Html.ActionLink("Выход", "Logoff", "Account", new object { }, new { @class = "btn btn-danger my-2 my-sm-0" })
+                    else
+                    {
+                        @Html.ActionLink("Вход", "Login", "Account", new object { }, new { @class = "btn btn-success mr-sm-2" })
+                        @Html.ActionLink("Регистрация", "Register", "Account", new object { }, new { @class = "btn btn-primary my-2 my-sm-0" })
+                    }
                 }
-                else
+                catch (Exception)
                 {
                     @Html.ActionLink("Вход", "Login", "Account", new object { }, new { @class = "btn btn-success mr-sm-2" })
                     @Html.ActionLink("Регистрация", "Register", "Account", new object { }, new { @class = "btn btn-primary my-2 my-sm-0" })
                 }
+
             </form>
         </div>
     </nav>

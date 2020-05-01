@@ -15,6 +15,7 @@ using System.Web.Mvc;
 
 namespace Accidents.Controllers
 {
+    [HandleError]
     public class AdminPanelAccidentsController : Controller
     {
         // GET: AdminPanelAccidents
@@ -71,7 +72,7 @@ namespace Accidents.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "AdminPanelAccidents");
                 }
             }
         }

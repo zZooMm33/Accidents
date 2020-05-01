@@ -12,13 +12,14 @@ using System.Web.Security;
 
 namespace Accidents.Controllers
 {
+    [HandleError]
     public class AccountController : Controller
     {
         public ActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
             {                
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Accident", "Home");
             }
 
             return View();
@@ -44,7 +45,7 @@ namespace Accidents.Controllers
                 if (user != null)
                 {
                     FormsAuthentication.SetAuthCookie(log.Email, true);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Accident", "Home");
                 }
                 else
                 {
@@ -59,7 +60,7 @@ namespace Accidents.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Accident", "Home");
             }
 
             return View();
@@ -94,7 +95,7 @@ namespace Accidents.Controllers
                     if (user != null)
                     {
                         FormsAuthentication.SetAuthCookie(reg.Email, true);
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Accident", "Home");
                     }
                 }
                 else
@@ -110,7 +111,7 @@ namespace Accidents.Controllers
         public ActionResult Logoff()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Accident", "Home");
         }
     }
 }

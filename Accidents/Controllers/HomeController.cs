@@ -9,22 +9,16 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace Accidents.Controllers
-{
+{    
     public class HomeController : Controller
     {
+        [Authorize]
         public ActionResult Index()
         {
-            using (DatabaseContext db = new DatabaseContext())
-            {
-                var users = db.Users.Include(u => u.Role).ToList();
-                var roles = db.Roles.SqlQuery("SELECT * FROM [dbo].[Roles]").ToList();
-                ViewBag.Users = users;
-                ViewBag.Roles = roles;
-            }
-
-            return View();
+            return RedirectToAction("Accident", "Home");
         }
 
+        [Authorize]
         public ActionResult Profession(int? page, string Search)
         {
             using (DatabaseContext db = new DatabaseContext())
@@ -40,6 +34,7 @@ namespace Accidents.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult Danger(int? page, string Search)
         {
             using (DatabaseContext db = new DatabaseContext())
@@ -55,6 +50,7 @@ namespace Accidents.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult SourceDanger(int? page, string Search)
         {
             using (DatabaseContext db = new DatabaseContext())
@@ -70,9 +66,10 @@ namespace Accidents.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult Accident(int? page, string Search, string SearchBy)
-        {
-            using(DatabaseContext db = new DatabaseContext())
+        {            
+            using (DatabaseContext db = new DatabaseContext())
             {
                 List<Accident> accidents;
                 if (Search != null && Search.Length > 0)
