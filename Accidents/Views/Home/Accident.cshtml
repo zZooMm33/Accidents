@@ -39,13 +39,12 @@
                 <thead>
                     <tr>
                         <th style="width: 10%" class="center">Название</th>
-                        <th style="width: 50%" class="center">Описание</th>
+                        <th style="width: 60%" class="center">Описание</th>
                         <th style="width: 5%" class="center">Дата</th>
                         <th style="width: 5%" class="center">Профессия</th>
                         <th style="width: 10%" class="center">Опасность</th>
                         <th style="width: 5%" class="center">Источник опасности</th>
                         <th style="width: 5%" class="center">Ссылка</th>
-                        <th style="width: 10%"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,9 +72,6 @@
                             </td>
                             <td>
                                 <a href="@Html.DisplayFor(modelItem => item.Link)">Перейти</a>
-                            </td>
-                            <td>
-                                @Html.ActionLink("Статистика", "Edit", "AdminPanelAccidents", new { id = item.Id }, new { @class = "btn btn-primary disabled" })
                             </td>                            
                         </tr>
                     }

@@ -96,7 +96,7 @@ namespace Accidents.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Error", new { error = "Выбранный источник опасности не был найдена." });
+                    return RedirectToAction("Index", "Error", new { error = "Выбранный источник опасности не был найден." });
                 }
             }
         }
