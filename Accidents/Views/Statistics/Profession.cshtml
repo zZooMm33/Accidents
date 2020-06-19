@@ -17,9 +17,12 @@
     </style>
 }
 
+
 <h1 class="center mt-4"> Статистика для профессии - @ViewBag.StatisticsTitle</h1>
 
-<h4 class="left mt-4">Несчастные случаи связанные с профессией - @ViewBag.StatisticsTitle</h4>
+<div class="mt-4" id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+<h4 class="left mt-4">Несчастные случаи связанные с профессией - @ViewBag.StatisticsTitle (всего: @ViewBag.StatisticsCount)</h4>
 
 <div class="container">
     <div class="row">
@@ -47,7 +50,7 @@
                         <th style="width: 5%" class="center">Профессия</th>
                         <th style="width: 10%" class="center">Опасность</th>
                         <th style="width: 5%" class="center">Источник опасности</th>
-                        <th style="width: 5%" class="center">Ссылка</th>                        
+                        <th style="width: 5%" class="center">Ссылка</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,7 +78,7 @@
                             </td>
                             <td>
                                 <a href="@Html.DisplayFor(modelItem => item.Link)">Перейти</a>
-                            </td>                            
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -87,4 +90,45 @@
 <br />
 <p>Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount</p>
 @Html.PagedListPager(Model, page => Url.Action("Profession", new { page, Search = Request.QueryString["Search"], SearchBy = Request.QueryString["SearchBy"] }))
+
+
+<script>
+window.onload = function () {
+
+var result = @Html.Raw(ViewBag.DataPoints);
+var dataPoints =[];
+var summ = 0;
+//for (var i = 0; i < result.length; i++) {
+//    summ += result[i].Id;
+//}
+for (var i = 0; i < result.length; i++){
+    //dataPoints.push({ label: result[i].Title, y: (result[i].Id / summ * 100) });
+    dataPoints.push({ label: result[i].Title, y: result[i].Id});
+}
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	exportEnabled: true,
+	animationEnabled: true,
+	title: {
+        text: "Количество несчастных случаев для всех профессий",
+		fontSize: 21
+    },
+    //pie
+	data: [{
+        type: "column",
+        dataPoints: dataPoints
+        //startAngle: 160,
+		//toolTipContent: "<b>{label}</b>: {y}%",
+		//indexLabel: "{label} - {y}%",
+		
+	}]
+});
+chart.render();
+
+}
+</script>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 
